@@ -1,14 +1,26 @@
 package starbuzz_coffee
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestStarbuzz_Coffee(t *testing.T) {
-	milk := Milk{CondimentDecorator{beverage: HouseBlend{}, price: 10, description: "milk"}}
-	println(milk.Cost(), "元")
-	println(milk.GetDescription())
-	milk.SetBeverage(nil)
-	println(milk.Cost(), "元")
-	println(milk.GetDescription())
+	milk := NewMilk(NewHouseBlend())
+	fmt.Printf("%s $%.2f\n", milk.GetDescription(), milk.Cost())
+	milk.Beverage = nil
+	fmt.Printf("%s $%.2f\n", milk.GetDescription(), milk.Cost())
+
+}
+
+func TestStarbuzz_Coffee2(t *testing.T) {
+	whip := NewWhip(NewMocha(NewDarkRoast()))
+	fmt.Printf("%s $%.2f\n", whip.GetDescription(), whip.Cost())
+
+}
+
+func TestStarbuzz_Coffee3(t *testing.T) {
+	mocha := NewMocha(NewMocha(NewSoy(NewWhip(nil))))
+	fmt.Printf("%s $%.2f\n", mocha.GetDescription(), mocha.Cost())
+
 }

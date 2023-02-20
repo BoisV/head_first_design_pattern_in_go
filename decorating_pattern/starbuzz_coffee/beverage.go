@@ -1,150 +1,69 @@
 package starbuzz_coffee
 
-type Beverage interface {
-	Cost() int64
+type Beverageer interface {
+	Cost() float64
 	GetDescription() string
 }
 
+type Beverage struct {
+	Description string
+	Price       float64 // 价格
+	Count       float64 // 折扣
+
+}
+
+func (b *Beverage) Cost() float64 {
+	return b.Price * b.Count
+}
+
+func (b *Beverage) GetDescription() string {
+	return b.Description
+}
+
 type DarkRoast struct {
+	Beverage
 }
 
 func NewDarkRoast() *DarkRoast {
-	return &DarkRoast{}
-}
-
-func (d DarkRoast) Cost() int64 {
-	return 10
-}
-
-func (d DarkRoast) GetDescription() string {
-	return "whip"
+	return &DarkRoast{Beverage{
+		Description: "dark roast",
+		Price:       0.99,
+		Count:       1,
+	}}
 }
 
 type HouseBlend struct {
-}
-
-func (h HouseBlend) Cost() int64 {
-	return 19
-}
-
-func (h HouseBlend) GetDescription() string {
-	return "house blend"
+	Beverage
 }
 
 func NewHouseBlend() *HouseBlend {
-	return &HouseBlend{}
+	return &HouseBlend{Beverage{
+		Description: "house blend",
+		Price:       0.89,
+		Count:       1,
+	}}
 }
 
 type Espresso struct {
+	Beverage
 }
 
 func NewEspresso() *Espresso {
-	return &Espresso{}
-}
-
-func (e Espresso) Cost() int64 {
-	return 30
-}
-
-func (e Espresso) GetDescription() string {
-	return "espresso"
+	return &Espresso{Beverage{
+		Description: "espresso",
+		Price:       1.99,
+		Count:       1,
+	}}
 }
 
 type Decaf struct {
+	Beverage
 }
 
-func (d Decaf) Cost() int64 {
-	return 25
-}
-
-func (d Decaf) GetDescription() string {
-	return "decaf"
-}
-
-type CondimentDecorator struct {
-	beverage    Beverage
-	price       int64
-	description string
-}
-
-func (b *CondimentDecorator) GetDescription() string {
-	if b.beverage != nil {
-		return b.beverage.GetDescription() + " and " + b.description
-	}
-	return b.description
-}
-
-func (b *CondimentDecorator) Cost() int64 {
-	if b.beverage == nil {
-		return b.price
-	}
-	return b.beverage.Cost() + b.price
-}
-
-func (b *CondimentDecorator) SetBeverage(beverage Beverage) {
-	b.beverage = beverage
-}
-
-type Mocha struct {
-	CondimentDecorator
-}
-
-func NewMocha(condimentDecorator CondimentDecorator) *Mocha {
-	return &Mocha{CondimentDecorator: condimentDecorator}
-}
-
-func (m Mocha) Cost() int64 {
-	return m.CondimentDecorator.Cost()
-}
-
-func (m Mocha) GetDescription() string {
-	return m.CondimentDecorator.GetDescription()
-}
-
-type Whip struct {
-	CondimentDecorator
-}
-
-func NewWhip(condimentDecorator CondimentDecorator) *Whip {
-	return &Whip{CondimentDecorator: condimentDecorator}
-}
-
-func (w Whip) Cost() int64 {
-	return w.CondimentDecorator.Cost()
-}
-
-func (w Whip) GetDescription() string {
-	return w.CondimentDecorator.GetDescription()
-}
-
-type Milk struct {
-	CondimentDecorator
-}
-
-func (m Milk) Cost() int64 {
-	return m.CondimentDecorator.Cost()
-}
-
-func (m Milk) GetDescription() string {
-	return m.CondimentDecorator.GetDescription()
-}
-
-func NewMilk() *Milk {
-	return &Milk{}
-}
-
-type Soy struct {
-	CondimentDecorator
-}
-
-func NewSoy(condimentDecorator CondimentDecorator) *Soy {
-	return &Soy{CondimentDecorator: condimentDecorator}
-}
-
-func (s Soy) Cost() int64 {
-	return s.CondimentDecorator.Cost()
-}
-
-func (s Soy) GetDescription() string {
-	return s.CondimentDecorator.GetDescription()
+func NewDecaf() *Decaf {
+	return &Decaf{Beverage{
+		Description: "decaf",
+		Price:       1.05,
+		Count:       1,
+	}}
 }
