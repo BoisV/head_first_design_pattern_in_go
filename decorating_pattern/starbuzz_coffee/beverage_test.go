@@ -6,7 +6,9 @@ import (
 )
 
 func TestStarbuzz_Coffee(t *testing.T) {
-	milk := NewMilk(NewHouseBlend())
+	houseBlend := NewHouseBlend()
+	houseBlend.Count = 0.8
+	milk := NewMilk(houseBlend)
 	fmt.Printf("%s $%.2f\n", milk.GetDescription(), milk.Cost())
 	milk.Beverage = nil
 	fmt.Printf("%s $%.2f\n", milk.GetDescription(), milk.Cost())
