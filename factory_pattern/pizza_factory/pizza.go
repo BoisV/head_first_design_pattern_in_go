@@ -1,4 +1,4 @@
-package pizza_store
+package pizza_factory
 
 import (
 	"fmt"

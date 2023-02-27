@@ -1,4 +1,4 @@
-package pizza_store
+package pizza_factory
 
 type PizzaStore struct {
 	PizzaFactory PizzaFactory
