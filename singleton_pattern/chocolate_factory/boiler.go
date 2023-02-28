@@ -42,15 +42,36 @@ func (b *boiler) IsBoiled() bool {
 }
 
 var lock = &sync.Mutex{}
-var boilerInstance *boiler
+var boilerInstanceDCL *boiler
 
-func GetBoilerInstance() *boiler {
-	if boilerInstance == nil {
+// GetBoilerInstanceByDoubelCheckedLock 双重校验锁
+func GetBoilerInstanceByDoubelCheckedLock() *boiler {
+	if boilerInstanceDCL == nil {
 		lock.Lock()
 		defer lock.Unlock()
-		if boilerInstance == nil {
-			boilerInstance = NewBoiler()
+		if boilerInstanceDCL == nil {
+			boilerInstanceDCL = NewBoiler()
 		}
 	}
-	return boilerInstance
+	return boilerInstanceDCL
+}
+
+var boilerInstanceEagerly = new(boiler)
+
+// GetBoilerInstanceEagerly 饿汉式
+func GetBoilerInstanceEagerly() *boiler {
+	return boilerInstanceEagerly
+}
+
+var lock2 = &sync.Mutex{}
+var boilerInstanceLazily *boiler
+
+// GetBoilerInstanceLazily 懒汉式
+func GetBoilerInstanceLazily() *boiler {
+	lock2.Lock()
+	defer lock2.Unlock()
+	if boilerInstanceLazily == nil {
+		boilerInstanceLazily = new(boiler)
+	}
+	return boilerInstanceLazily
 }
